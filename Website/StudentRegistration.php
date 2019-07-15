@@ -1,0 +1,31 @@
+<?php
+session_start();
+include('DbConnection.php');
+$name=$_POST['sname'];
+$email=$_POST['email'];
+$enrollment=$_POST['enrollment'];
+$username=$_POST['username'];
+$password=$_POST['password'];
+$gender=$_POST['gender'];
+$phone=$_POST['phone'];
+$dob=$_POST['dob'];
+$tenth=$_POST['tenth'];
+$twelve=$_POST['tweleve'];
+$passing=$_POST['passing'];
+$clgid=$_POST['clgid'];
+$clgname=$_POST['clgname'];
+$clgbranch=$_POST['clgbranch'];
+$cgpa=$_POST['cgpa'];
+$exp=$_POST['exp'];
+$address=$_POST['address'];
+$photo=$_FILES['photo'];
+$resume=$_FILES['resume'];
+$query='insert into student values ("'.$name.'","'.$email.'","'.$enrollment.'","'.$phone.'","'.$address.'","'.$gender.'","'.$dob.'","'.$clgid.'","'.$clgname.'","'.$clgbranch.'",'.$cgpa.','.$passing.','.$tenth.','.$twelve.',"'.$resume['name'].'","'.$photo['name'].'",'.$exp.',"Invalid","'.$username.'","'.$password.'")';
+mysqli_query($con,$query);
+$_SESSION['message']='Student Registration Successfull';
+$query='insert into studentvalidaterequest values ('.$clgid.',"'.$enrollment.'","Invalid")';
+mysqli_query($con,$query);
+move_uploaded_file($photo['tmp_name'],"Students/Profile/".$photo['name']);
+move_uploaded_file($resume['tmp_name'],"Students/Resume/".$resume['name']);
+header('location:index.php');
+?>
